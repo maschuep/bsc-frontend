@@ -1,0 +1,35 @@
+<div class="container" style="height: 100vh;">
+    <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <form>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" id="username" name="Benutzername"
+                                [(ngModel)]="username">
+                            <small class="text-danger" *ngIf="!mail">Email einfügen</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pwd">Passwort</label>
+                            <div class="input-group">
+                                <input [(ngModel)]="password" [type]="pwType" class="form-control" id="pwd"
+                                    name="Recipient's username" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2">
+                                <div (click)="viewPw()" class="input-group-append" style="cursor: pointer;">
+                                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye"></i></span>
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="!pwd">Passwort einfügen</small>
+                        </div>
+
+                    </form>
+                    <button (click)="login()" type="button" class="btn btn-primary">Login</button>
+                    <small class="text-danger" *ngIf="!sucessful">Benutzername oder Passwort falsch</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
