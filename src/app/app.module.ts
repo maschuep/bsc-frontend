@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OverviewComponent } from './overview/overview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpClientModule
   ],
-  providers: [{provide:'BACKEND_URL', useValue:"https://bsc-api.maschuep.ch"}],
+  providers: [{provide:'BACKEND_URL', useValue:"http://localhost:3002"}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,7 +25,11 @@ export class LoginComponent {
     this.pwd = this.password?.length > 0;
     this.mail = this.username?.length > 0;
     if (this.mail && this.pwd){
-      this._loginService.login(this.username, this.password).subscribe(()=> this._router.navigate(['/uebersicht']), (err)=> this.sucessful = false)
+      this._loginService.login(this.username, this.password)
+      .subscribe((ans)=> {
+        this.sucessful = true; 
+        this._router.navigate([`/overview/${ans.participant}`])}, 
+        (err)=> this.sucessful = false)
     }
 
   }
