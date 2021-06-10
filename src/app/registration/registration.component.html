@@ -1,0 +1,67 @@
+<div *ngIf="possibleParticipant$ |async as p; else noPart" class="container" style="height: 100vh;">
+    <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registration</h5>
+                    <form>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" name="Benutzername" [(ngModel)]="mail" (ngModelChange)="checkMail()">
+                            <small class="text-danger" *ngIf="!validMail">Email einfügen</small>
+                            <small class="text-danger" *ngIf="mailExists">Email existiert bereits</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobiltelefon Nummer</label>
+                            <input class="form-control" type="text" name="Benutzername" [(ngModel)]="phone">
+                            <small class="text-danger" *ngIf="!validPhone">Mobiltelefonnummer einfügen</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pw1">Passwort</label>
+                            <div class="input-group">
+                                <input [(ngModel)]="password1" [type]="pw1Type" class="form-control" id="pw1"
+                                    name="Recipient's username" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2">
+                                <div (click)="togglePw('pw1')" class="input-group-append" style="cursor: pointer;">
+                                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye"></i></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pw2">Passwort wiederholen</label>
+                            <div class="input-group">
+                                <input [(ngModel)]="password2" (ngModelChange)="passwordsMatch()" [type]="pw2Type"
+                                    class="form-control" id="pw2" name="Recipient's username"
+                                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div (click)="togglePw('pw2')" class="input-group-append" style="cursor: pointer;">
+                                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye"></i></span>
+                                </div>
+                            </div>
+                            <small class="text-danger" *ngIf="!validPw">Passwörter stimmen nicht überein</small>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Teilnehmerid (Nachnahme)</label>
+                            <input class="form-control" type="text" name="Benutzername" [(ngModel)]="participant"
+                                (ngModelChange)="checkForParticipant($event, p)">
+                            <small class="text-danger" *ngIf="!validParticipant">Id existiert nicht</small>
+                        </div>
+
+                    </form>
+                    <button (click)="register()" type="button" class="btn btn-primary">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noPart>
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</ng-template>

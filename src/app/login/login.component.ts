@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../services/login.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent {
   sucessful: boolean = true;
 
 
-  constructor(private _loginService: LoginService, private _router:Router) { }
+  constructor(private _loginService: UserService, private _router:Router) { }
 
   login() {
     this.pwd = this.password?.length > 0;

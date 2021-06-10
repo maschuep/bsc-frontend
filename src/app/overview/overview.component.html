@@ -1,5 +1,6 @@
 <div *ngIf="all$ | async as all; else noData">
-    {{all[all.length-1] | json}}
+    <div id="overview"></div>
+  <app-overview-zoomable [data]="all"></app-overview-zoomable>
 </div>
 
 <ng-template #noData>
