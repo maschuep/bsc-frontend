@@ -23,10 +23,9 @@ export class UserService {
   }
 
   public checkForMail(mail: string):Observable<boolean> {
-    return this._http.get<{ mesage: string }>(`${this._url}/user/exists/${mail}`).pipe(
-      tap(console.log),
+    return this._http.get<{ message: string }>(`${this._url}/user/exists/${mail}`).pipe(
+      tap(),
       map(ans => ans.message === 'exists'),
-      tap(console.log)
     )
   }
 }

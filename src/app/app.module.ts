@@ -12,6 +12,7 @@ import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { WeekBarChartComponent } from './week-bar-chart/week-bar-chart.component';
 import { OverviewZoomableComponent } from './overview-zoomable/overview-zoomable.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RegistrationComponent } from './registration/registration.component';
     OverviewComponent,
     WeekBarChartComponent,
     OverviewZoomableComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EVENT_MANAGER_PLUGINS } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import * as d3 from 'd3';
-import { concatAll, delay, map, tap } from 'rxjs/operators';
-import { Measurement } from '../services/interfaces/measurement';
+import { concatAll, map } from 'rxjs/operators';
 import { OverviewService } from '../services/overview.service';
 
 @Component({
@@ -13,29 +10,52 @@ import { OverviewService } from '../services/overview.service';
 })
 export class OverviewComponent implements OnInit {
 
+  config = { granularity: 1000 * 60 * 30, duration: 1000 * 60 * 60 * 24 , durationOffset: 0 /*1000 * 60 * 60 * 24 * 4*/ }
+
   all$ = this._route.params.pipe(
+    map(p => p.participant),
+    map(p => this._ov.getAll(p)),
+    concatAll(),
+    map(ms => ms.sort((a, b) => a.timestamp - b.timestamp))
+  )
+
+  lastWeek$ = this._route.params.pipe(
     map(p => p.participant),
     map(p => this._ov.getLastWeek(p)),
     concatAll(),
+    map(ms => ms.sort((a, b) => a.timestamp - b.timestamp))
   )
 
-  latest: {wh: number, timestamp: number};
+  today$ = this._route.params.pipe(
+    map(p => p.participant),
+    map(p => this._ov.getToday(p)),
+    concatAll(),
+    map(ms => ms.sort((a, b) => a.timestamp - b.timestamp))
+  )
 
+  latest: { wh: number, timestamp: number };
 
-  constructor(private _ov: OverviewService, private _route: ActivatedRoute) { }
+  constructor(private _ov: OverviewService, private _route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
 
   }
 
-  getLatest(){
+  getLatest() {
     this._route.params.pipe(
       map(param => param.participant),
-      map( p=> this._ov.getLatest(p)),
+      map(p => this._ov.getLatest(p)),
       concatAll(),
-      tap(console.log)
     )
-    
+
+  }
+
+  configForToday() {
+    this.config.duration = 1000 * 60 * 60 * 24;
+    this.config.granularity = 1000 * 60 * 5;
+    this.config.durationOffset = 0;
+    console.log(this.config)
   }
 
 }

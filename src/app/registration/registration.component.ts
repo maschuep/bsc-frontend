@@ -85,7 +85,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
-    console.log(this.mailExists)
     this.validMail = this.valMail();
     this.valPwd();
     this.valPhone();
@@ -119,7 +118,6 @@ export class RegistrationComponent implements OnInit {
     p.forEach(part => {
 
       if (part.toLowerCase() === e.toLowerCase()) {
-        console.log('zägg')
         this.participantId = e.toLowerCase();
       }
     })

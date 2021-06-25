@@ -49,9 +49,6 @@ export class WeekBarChartComponent implements OnInit {
       .domain(d3.extent(data, d => d.date))
 
 
-    console.log(d3.axisBottom(x).tickValues())
-
-
     // Draw the X-axis on the DOM
     this.svg.append("g")
       .attr("transform", "translate(0," + this.height + ")")
