@@ -1,13 +1,16 @@
 <div class="container">
   <div class="row h-100 align-items-center justify-content-center">
-    <div class="col-sm-12 col-md-6">
-      <h1>Stromverbrauch</h1>
+    <div class="col-sm-12 col-md-11">
+      <h1>Übersicht</h1>
       <div *ngIf="all$ | async as all else noData">
-
-        <app-statistics [config]="config" [all]="all"></app-statistics>
-
+        <div class="btn-group btn-group-sm " role="group" aria-label="Basic example">
+          <button type="button" (click)="configForToday()" class="btn btn-primary">Heute</button>
+          <button type="button" (click)="configForThisWeek()" class="btn btn-primary">Letzte Woche</button>
+          <button type="button" (click)="configForLastMonth()" class="btn btn-primary">Letzter Monat</button>
+        </div>
+        <app-overview-chart [config]="config" [all]="all"></app-overview-chart>
       </div>
-      <h2>Information</h2>
+      <h2 class="mt-5">Informationen</h2>
       <p>Hier sehen sie eine übersicht über ihren Stromverbrauch. Mithilfe der Knöpfe können sie die Zeitdauer ansehen.
       </p>
       <p>Hier sehen sie eine kurze nummerischen Vergleich ihers aktuellen Verbrauchs zu diesem in dieser Woche.</p>

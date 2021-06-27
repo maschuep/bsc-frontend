@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { concatAll, map } from 'rxjs/operators';
+import { StatisticsConfig } from '../services/interfaces/statistics-config';
 import { OverviewService } from '../services/overview.service';
 
 @Component({
@@ -10,10 +11,15 @@ import { OverviewService } from '../services/overview.service';
 })
 export class OverviewComponent implements OnInit {
 
-  config = { granularity: 1000 * 60 * 30, duration: 1000 * 60 * 60 * 24 , durationOffset: 0 /*1000 * 60 * 60 * 24 * 4*/ }
+  config: StatisticsConfig;
 
   all$ = this._route.params.pipe(
     map(p => p.participant),
+    map(p => {
+      if (p) return p;
+      const data = JSON.parse(atob(localStorage.getItem('token').split('.')[1]));
+      return data.participant;
+    }),
     map(p => this._ov.getAll(p)),
     concatAll(),
     map(ms => ms.sort((a, b) => a.timestamp - b.timestamp))
@@ -36,6 +42,7 @@ export class OverviewComponent implements OnInit {
   latest: { wh: number, timestamp: number };
 
   constructor(private _ov: OverviewService, private _route: ActivatedRoute) {
+    this.configForThisWeek();
   }
 
   ngOnInit(): void {
@@ -52,10 +59,16 @@ export class OverviewComponent implements OnInit {
   }
 
   configForToday() {
-    this.config.duration = 1000 * 60 * 60 * 24;
-    this.config.granularity = 1000 * 60 * 5;
-    this.config.durationOffset = 0;
+    this.config = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24, durationOffset: 0 }
     console.log(this.config)
+  }
+
+  configForThisWeek() {
+    this.config = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 4 }
+  }
+
+  configForLastMonth() {
+    this.config = { granularity: 1000 * 60 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 4 }
   }
 
 }

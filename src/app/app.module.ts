@@ -9,20 +9,18 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OverviewComponent } from './overview/overview.component';
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
-import { WeekBarChartComponent } from './week-bar-chart/week-bar-chart.component';
-import { OverviewZoomableComponent } from './overview-zoomable/overview-zoomable.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { StatisticsComponent } from './statistics/statistics.component';
+import { OverviewChartComponent } from './overview-chart/overview-chart.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     OverviewComponent,
-    WeekBarChartComponent,
-    OverviewZoomableComponent,
     RegistrationComponent,
-    StatisticsComponent
+    OverviewChartComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

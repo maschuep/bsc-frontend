@@ -22,6 +22,10 @@ export class UserService {
     );
   }
 
+  public profile(username: string){
+    return this._http.get(`${this._url}/user`)
+  }
+
   public checkForMail(mail: string):Observable<boolean> {
     return this._http.get<{ message: string }>(`${this._url}/user/exists/${mail}`).pipe(
       tap(),
