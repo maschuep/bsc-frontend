@@ -50,8 +50,9 @@ export class OverviewChartComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     const max = d3.max(this.all, d => d.timestamp);
     this._avg = new AvgerageService(this.config);
-    this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(max)))
-    this.average = this._avg.calcAverage(this.all);
+    this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(Date.now())))
+    this.average = this._avg.calcExpandedAverage(this.all);
+    
     this.initializeChart();
     this.drawChart();
   }
@@ -102,12 +103,12 @@ export class OverviewChartComponent implements OnInit, OnChanges {
       .append('path')
       .attr('id', 'line')
       .style('fill', 'none')
-      .style('stroke', 'blue')
+      .style('stroke', '#2a3cfa')
       .style('stroke-width', '2px');
   }
 
   drawChart() {
-    this._width = this.chartElem.nativeElement.getBoundingClientRect().width;
+    this._width = this.chartElem.nativeElement.getBoundingClientRect().width * 0.85;
     this._height = this.chartElem.nativeElement.getBoundingClientRect().height;
     this.svg.attr('width', this._width);
     this.svg.attr('height', this._height);
@@ -117,7 +118,7 @@ export class OverviewChartComponent implements OnInit, OnChanges {
     this.svg.append("defs").append("SVG:clipPath")
       .attr("id", "clip")
       .append("SVG:rect")
-      .attr("width", this._width - 3 * this._margin)
+      .attr("width", this._width - 2 * this._margin)
       .attr("height", this._height)
       .style('transform', 'translate(' + this._margin + 'px, ' + -1 * this._margin + 'px) ')
       .attr("x", 0)
@@ -136,10 +137,10 @@ export class OverviewChartComponent implements OnInit, OnChanges {
       .enter()
       .append("rect")
       .attr("x", (d: Measurement) => this.xScale(d.timestamp))
-      .attr("y", (d: Measurement) => this.yScale(d.wh)+this._margin)
+      .attr("y", (d: Measurement) => this.yScale(d.wh) + this._margin)
       .attr("width", 1)
       .attr("height", (d) => (this._height) - this.yScale(d.wh))
-      .style("fill", 'red')
+      .style("fill", '#e7160f')
       .style("opacity", 0.99)
 
     const line = d3

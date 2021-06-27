@@ -11,7 +11,8 @@ import { OverviewService } from '../services/overview.service';
 })
 export class OverviewComponent implements OnInit {
 
-  config: StatisticsConfig;
+  chartConfig: StatisticsConfig;
+  numbersConfig: StatisticsConfig;
 
   all$ = this._route.params.pipe(
     map(p => p.participant),
@@ -59,16 +60,18 @@ export class OverviewComponent implements OnInit {
   }
 
   configForToday() {
-    this.config = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24, durationOffset: 0 }
-    console.log(this.config)
+    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24, durationOffset: 0 }
+    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24, durationOffset: 0 };
   }
 
   configForThisWeek() {
-    this.config = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 4 }
+    this.chartConfig = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 };
   }
 
   configForLastMonth() {
-    this.config = { granularity: 1000 * 60 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 4 }
+    this.chartConfig = { granularity: 1000 * 60 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.numbersConfig = { granularity: 1000 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24, durationOffset: -1000 * 60 * 60 * 24 * 3 }
   }
 
 }

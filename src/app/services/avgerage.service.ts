@@ -1,4 +1,5 @@
-import { MapType } from '@angular/compiler';
+import { Optional } from '@angular/core';
+import { AverageObject } from './interfaces/average-object';
 import { Measurement } from './interfaces/measurement';
 import { StatisticsConfig } from './interfaces/statistics-config';
 
@@ -15,52 +16,64 @@ export class AvgerageService {
     this.durationOffset = config.durationOffset ? config.durationOffset : 0;
     this.duration = config.duration ? config.duration : config.window;
   }
-
-
-  average(data: Measurement[]) {
-    return data.reduce((acc, curr) => acc += curr.wh, 0) / data.length;
+  /**
+     * 
+     * @param data data
+     * @returns the average over the duration and the average over the average
+     */
+  simpleAverage(data: Measurement[]): AverageObject {
+    let avg = this.calcAverage(data)
+    console.log(avg.length)
+    avg = avg.filter(d => d.ts < Date.now())
+    console.log(avg.length)
+    data = data.filter(d => d.timestamp > (this.getStartOfDuration(Date.now())))
+    let avgAvg = this.round(avg.reduce((acc, curr) => acc += curr.wh, 0));
+    let usage = this.round(data.reduce((acc, curr) => acc += curr.wh, 0));
+    return { avg: avgAvg, usage };
   }
 
   averageInPeriod(data: Measurement[]) {
-    return data.reduce
+
   }
 
-  calcAverage(data: Measurement[]) {
-    let max = data[data.length - 1].timestamp;
-    let min = Date.now();
-    let fiveMinMap = new Map<number, { avg: number, wh: number, count: number }>();
+  calcAverage(data:Measurement[]){
+    let intervalMap = new Map<number, { wh: number, count: number }>();
     data.forEach((d, i) => {
-      max = d.timestamp > max ? d.timestamp : max;
-      min = d.timestamp < min ? d.timestamp : min;
       let intervall = this.getIntervall(d.timestamp);
-      let f = fiveMinMap.get(intervall);
+      let f = intervalMap.get(intervall);
       if (f) {
         f.wh += d.wh;
         f.count += 1;
-        f.avg = f.wh / f.count;
-        fiveMinMap.set(intervall, f)
+        intervalMap.set(intervall, f)
       } else {
-        fiveMinMap.set(intervall, { wh: d.wh, avg: d.wh, count: 1 })
+        intervalMap.set(intervall, { wh: d.wh, count: 1 })
       }
     })
-    let average = Array.from(fiveMinMap.entries()).map(d => {
-      return { ts: this.getDateFromInterval(d[0]), avg: d[1].avg, count: d[1].count, interval: d[0] }
+    return Array.from(intervalMap.entries()).map(d => {
+      return { ts: this.getDateFromInterval(d[0]), wh: d[1].wh, avg: (d[1].wh / d[1].count), count: d[1].count, interval: d[0] }
     })
+    .sort((a,b)=> a.ts - b.ts)
+  }
 
-    var offset = 1;
+
+  calcExpandedAverage(data: Measurement[]) {
+    
+    let average = this.calcAverage(data);
+
+    var offset = 0;
     let orig = average;
     let window = this.window;
 
-    while (this.duration >  offset * this.window) {
+    while (this.duration > offset * this.window) {
       orig.forEach(a => {
-        let newA = { ts: this.getDateFromIntervalOffset(a.interval, offset), avg: a.avg, count: a.count, interval: a.interval }
+        let newA = { ts: this.getDateFromIntervalOffset(a.interval, offset), wh: a.wh, avg: a.avg, count: a.count, interval: a.interval }
         average.push(newA);
       });
       offset++;
       window = offset * this.window;
     }
-    
-    const start = this.getStartOfDuration(max);
+
+    const start = this.getStartOfDuration(Date.now());
     return average.filter(a => a.ts > start).sort((a, b) => a.ts - b.ts);
   }
 
@@ -91,5 +104,13 @@ export class AvgerageService {
     return this.getDateFromInterval(interval) - this.window * offset;
   }
 
+
+  private round(num: number) {
+    return Math.round(num * 100) / 100;
+  }
+
+  private average<T>(data: T[], dataFn: (entry: T) => number): number {
+    return data.reduce((acc, curr) => acc += (dataFn(curr) / data.length), 0);
+  }
 
 }

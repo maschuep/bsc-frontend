@@ -12,7 +12,8 @@ import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
 import { OverviewChartComponent } from './overview-chart/overview-chart.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { NumbersComponent } from './numbers/numbers.component';
+import { KWhPipe } from './services/pipes/k-wh.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,9 @@ import { ProfileComponent } from './profile/profile.component';
     OverviewComponent,
     RegistrationComponent,
     OverviewChartComponent,
-    ProfileComponent
+    ProfileComponent,
+    NumbersComponent,
+    KWhPipe
   ],
   imports: [
     BrowserModule,
