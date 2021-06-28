@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as d3 from 'd3';
 import { AvgerageService } from '../services/avgerage.service';
 import { Measurement } from '../services/interfaces/measurement';
@@ -9,7 +9,7 @@ import { StatisticsConfig } from '../services/interfaces/statistics-config';
   templateUrl: './overview-chart.component.html',
   styleUrls: ['./overview-chart.component.scss']
 })
-export class OverviewChartComponent implements OnInit, OnChanges {
+export class OverviewChartComponent implements AfterViewInit, OnChanges {
 
 
 
@@ -21,9 +21,11 @@ export class OverviewChartComponent implements OnInit, OnChanges {
 
   average: { ts: number, avg: number, count: number }[];
 
+  private _lg = 990;
+
   private _width = 700;
   private _height = 400;
-  private _margin = 40;
+  private _margin = 17;
 
   public svg;
   public svgInner;
@@ -43,16 +45,16 @@ export class OverviewChartComponent implements OnInit, OnChanges {
       this.svg.remove();
       this.config = changes.config ? changes.config.currentValue : this.config;
       this.all = changes.all ? changes.all.currentValue : this.all;
-      this.ngOnInit();
+      this.ngAfterViewInit();
     }
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     const max = d3.max(this.all, d => d.timestamp);
     this._avg = new AvgerageService(this.config);
     this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(Date.now())))
     this.average = this._avg.calcExpandedAverage(this.all);
-    
+
     this.initializeChart();
     this.drawChart();
   }
@@ -83,7 +85,7 @@ export class OverviewChartComponent implements OnInit, OnChanges {
       .domain(this.getMinMax(this.data, this.average))
       .nice();
 
-    this.xScale = d3.scaleTime().domain(d3.extent(this.data, d => d.timestamp)).nice();
+    this.xScale = d3.scaleTime().domain(d3.extent(this.average, d => d.ts)).nice();
 
     this.yAxis = this.svgInner
       .append('g')
@@ -105,13 +107,14 @@ export class OverviewChartComponent implements OnInit, OnChanges {
       .style('fill', 'none')
       .style('stroke', '#2a3cfa')
       .style('stroke-width', '2px');
+
+
+    d3.select(window).on('resize', () => this.drawChart());
   }
 
   drawChart() {
-    this._width = this.chartElem.nativeElement.getBoundingClientRect().width * 0.85;
-    this._height = this.chartElem.nativeElement.getBoundingClientRect().height;
+    this._width = this.chartElem.nativeElement.getBoundingClientRect().width;
     this.svg.attr('width', this._width);
-    this.svg.attr('height', this._height);
 
     this.drawLabels();
 
@@ -182,6 +185,7 @@ export class OverviewChartComponent implements OnInit, OnChanges {
   }
 
   drawLabels() {
+    if(this._width < this._lg) return;
     this.svg.append("text")
       .attr("transform",
         "translate(" + ((this._width + this._margin) / 2) + " ," +
@@ -191,7 +195,7 @@ export class OverviewChartComponent implements OnInit, OnChanges {
 
     this.svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 + this._margin - 15)
+      .attr("y", 0 + this._margin - 23)
       .attr("x", 0 - (this._height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")

@@ -43,7 +43,7 @@ export class OverviewComponent implements OnInit {
   latest: { wh: number, timestamp: number };
 
   constructor(private _ov: OverviewService, private _route: ActivatedRoute) {
-    this.configForThisWeek();
+    this.configForToday();
   }
 
   ngOnInit(): void {
@@ -65,13 +65,13 @@ export class OverviewComponent implements OnInit {
   }
 
   configForThisWeek() {
-    this.chartConfig = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
-    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 };
+    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 }
+    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 };
   }
 
   configForLastMonth() {
-    this.chartConfig = { granularity: 1000 * 60 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
-    this.numbersConfig = { granularity: 1000 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.chartConfig = { granularity: 1000 * 60 * 15, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 }
+    this.numbersConfig = { granularity: 1000 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24, durationOffset: 1000 * 60 * 60 * 24 * 4 }
   }
 
 }

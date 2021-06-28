@@ -22,7 +22,7 @@ export class AvgerageService {
      * @returns the average over the duration and the average over the average
      */
   simpleAverage(data: Measurement[]): AverageObject {
-    let avg = this.calcAverage(data)
+    let avg = this.calcAverageInWindow(data)
     console.log(avg.length)
     avg = avg.filter(d => d.ts < Date.now())
     console.log(avg.length)
@@ -36,7 +36,7 @@ export class AvgerageService {
 
   }
 
-  calcAverage(data:Measurement[]){
+  calcAverageInWindow(data:Measurement[]){
     let intervalMap = new Map<number, { wh: number, count: number }>();
     data.forEach((d, i) => {
       let intervall = this.getIntervall(d.timestamp);
@@ -58,7 +58,7 @@ export class AvgerageService {
 
   calcExpandedAverage(data: Measurement[]) {
     
-    let average = this.calcAverage(data);
+    let average = this.calcAverageInWindow(data);
 
     var offset = 0;
     let orig = average;

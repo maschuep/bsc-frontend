@@ -14,6 +14,7 @@ import { OverviewChartComponent } from './overview-chart/overview-chart.componen
 import { ProfileComponent } from './profile/profile.component';
 import { NumbersComponent } from './numbers/numbers.component';
 import { KWhPipe } from './services/pipes/k-wh.pipe';
+import { EventsComponent } from './events/events.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { KWhPipe } from './services/pipes/k-wh.pipe';
     OverviewChartComponent,
     ProfileComponent,
     NumbersComponent,
-    KWhPipe
+    KWhPipe,
+    EventsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EventsComponent } from './events/events.component';
 import { LoginComponent } from './login/login.component';
 import { OverviewComponent } from './overview/overview.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path:'registration', component: RegistrationComponent, },
   {path:'overview/:participant', component: OverviewComponent, canActivate: [AuthService]},
   {path:'overview', component: OverviewComponent, canActivate: [AuthService]},
-  {path:'profil', component: ProfileComponent, canActivate: [AuthService]}
+  {path:'profile', component: ProfileComponent, canActivate: [AuthService]},
+  {path:'events', component: EventsComponent, canActivate: [AuthService]}
 ];
 
 @NgModule({
