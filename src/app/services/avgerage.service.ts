@@ -28,23 +28,23 @@ export class AvgerageService {
     //return {avg: 0, usage: 0};
     const max = this.max(data, d => d.timestamp)
     let avg = this.calcAverage(data)
-    
+
     avg = avg.filter(d => d.ts < max)
-    if(this.durationStart){
+    if (this.durationStart) {
       avg = avg.filter(d => d.ts > this.durationStart)
     }
-    
+
     data = data.filter(d => d.timestamp > (this.getStartOfDuration(max)))
-   
+
     let avgAvg = this.round(avg.reduce((acc, curr) => acc += curr.avg, 0));
     let usage = this.round(data.reduce((acc, curr) => acc += curr.wh, 0));
     return { avg: avgAvg, usage };
   }
 
-  max<T>(data: T[], fn: (d:T) => number) {
+  max<T>(data: T[], fn: (d: T) => number) {
     return data.reduce((acc, curr) => acc = acc < fn(curr) ? fn(curr) : acc, 0);
   }
-  min<T>(data: T[], fn: (d:T) => number) {
+  min<T>(data: T[], fn: (d: T) => number) {
     return data.reduce((acc, curr) => acc = acc > fn(curr) ? fn(curr) : acc, Number.MAX_VALUE);
   }
 
@@ -62,12 +62,12 @@ export class AvgerageService {
       } else {
         acc.set(interval, { count: 1, wh: curr.wh })
       }
-      return acc; 
+      return acc;
     },
       new Map<number, { count: number, wh: number }>())
       .entries()).map(d => {
-      return { ts: this.getDateFromInterval(d[0], max), wh: d[1].wh, avg: (d[1].wh / d[1].count), count: d[1].count, interval: d[0] }
-    })
+        return { ts: this.getDateFromInterval(d[0], max), wh: d[1].wh, avg: (d[1].wh / d[1].count), count: d[1].count, interval: d[0] }
+      })
       .sort((a, b) => a.ts - b.ts)
   }
 
@@ -108,7 +108,7 @@ export class AvgerageService {
   }
 
   getStartOfDuration(ts: number) {
-    if(this.durationStart) return this.durationStart;
+    if (this.durationStart) return this.durationStart;
     return ts - (ts % this.duration) + this.durationOffset
   }
 
@@ -117,7 +117,7 @@ export class AvgerageService {
   }
 
   getDateFromIntervalOffset(interval: number, offset: number, max: number) {
-   return this.getDateFromInterval(interval, max) - this.window * offset;
+    return this.getDateFromInterval(interval, max) - this.window * offset;
   }
 
 

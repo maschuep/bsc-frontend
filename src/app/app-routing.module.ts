@@ -14,7 +14,8 @@ const routes: Routes = [
   {path:'overview/:participant', component: OverviewComponent, canActivate: [AuthService]},
   {path:'overview', component: OverviewComponent, canActivate: [AuthService]},
   {path:'profile', component: ProfileComponent, canActivate: [AuthService]},
-  {path:'events', component: EventsComponent, canActivate: [AuthService]}
+  {path:'events', component: EventsComponent, canActivate: [AuthService]},
+  {path:'events/:participant', component: EventsComponent, canActivate: [AuthService]}
 ];
 
 @NgModule({
