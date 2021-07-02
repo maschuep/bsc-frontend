@@ -1,3 +1,4 @@
+import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { AvgerageService } from '../services/avgerage.service';
 import { AverageObject } from '../services/interfaces/average-object';
@@ -20,13 +21,13 @@ export class NumbersComponent implements OnChanges {
   averages: AverageObject;
   constructor() { }
 
-  ngOnChanges(change: {config: SimpleChange, all:SimpleChange}): void {
-  
-    if(change.config){
+  ngOnChanges(change: { config: SimpleChange, all: SimpleChange }): void {
+
+    if (change.config) {
       this.config = change.config.currentValue
       this._avg = new AvgerageService(this.config);
     }
-    if(change.all){
+    if (change.all) {
       this.all = change.all.currentValue;
     }
     this.averages = this._avg.simpleAverage(this.all)

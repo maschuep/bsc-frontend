@@ -60,18 +60,22 @@ export class OverviewComponent implements OnInit {
   }
 
   configForToday() {
-    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24, durationOffset: 0 }
-    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24, durationOffset: 0 };
+    this.chartConfig = { granularity: 1000 * 60, window: 1000 * 60 * 60 * 24, durationOffset: 0 }
+    this.numbersConfig = { ...this.chartConfig, duration: this.chartConfig.window };
   }
 
   configForThisWeek() {
-    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 }
-    this.numbersConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 };
+    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.numbersConfig = { duration: this.chartConfig.window, ...this.chartConfig, granularity: 1000 * 60, };
   }
 
   configForLastMonth() {
-    this.chartConfig = { granularity: 1000 * 60 * 15, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24 * 7, durationOffset: 1000 * 60 * 60 * 24 * 4 }
-    this.numbersConfig = { granularity: 1000 * 60, duration: 1000 * 60 * 60 * 24 * 31, window: 1000 * 60 * 60 * 24, durationOffset: 1000 * 60 * 60 * 24 * 4 }
+    const today = new Date();
+    const start = new Date(today.getFullYear(), today.getMonth(), 1, 2);
+    const end = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+    console.log(end)
+    this.chartConfig = { granularity: 1000 * 60 * 60, duration: end.valueOf() - start.valueOf(), durationStart: start.valueOf(), durationEnd: end.valueOf(), window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.numbersConfig = { granularity: 1000 * 60, durationStart: start.valueOf(), durationEnd: end.valueOf(), window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
   }
 
 }

@@ -4,6 +4,8 @@ export interface StatisticsConfig {
     window: number;
     duration?: number;
     durationOffset?: number;
+    durationStart?: number;
+    durationEnd?: number;
 
 
 }

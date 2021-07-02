@@ -35,7 +35,7 @@ import { EventsComponent } from './events/events.component';
     HttpClientModule
   ],
   providers: [
-    { provide: 'BACKEND_URL', useValue: "http://bsc-api.maschuep.ch" },
+    { provide: 'BACKEND_URL', useValue: "http://localhost:3002" },
     { provide: HTTP_INTERCEPTORS, useClass: BearerAuthInterceptor, multi: true }
   ],
 

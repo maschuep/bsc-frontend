@@ -8,14 +8,20 @@
                         <div class="form-group">
                             <label>Benutzername</label>
                             <input class="form-control" type="text" name="Benutzername" [(ngModel)]="mail" (ngModelChange)="checkMail()">
-                            <small class="text-danger" *ngIf="!validMail">Email einfügen</small>
-                            <small class="text-danger" *ngIf="mailExists">Email existiert bereits</small>
+                            <small class="text-danger" *ngIf="!validMail">Name einfügen</small>
+                            <small class="text-danger" *ngIf="mailExists">Name existiert bereits</small>
                         </div>
 
                         <div class="form-group">
                             <label>Mobiltelefon Nummer</label>
-                            <input class="form-control" type="text" name="Benutzername" [(ngModel)]="phone">
-                            <small class="text-danger" *ngIf="!validPhone">Mobiltelefonnummer einfügen</small>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon3">+41</span>
+                                </div>
+                                <input  [(ngModel)]="phone" name="nummer" type="text" class="form-control" aria-describedby="basic-addon3">
+                              </div>
+                            
+                            <small class="text-danger" *ngIf="!validPhone">Mobiltelefonnummer mit Format 79 123 45  67 einfügen.</small>
                         </div>
 
                         <div class="form-group">
@@ -46,7 +52,7 @@
 
 
                         <div class="form-group">
-                            <label>Teilnehmerid (Nachnahme)</label>
+                            <label>Teilnehmerid (Nachnahme, Umlaute ausschreiben: ü = ue)</label>
                             <input class="form-control" type="text" name="Benutzername" [(ngModel)]="participant"
                                 (ngModelChange)="checkForParticipant($event, p)">
                             <small class="text-danger" *ngIf="!validParticipant">Id existiert nicht</small>

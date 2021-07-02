@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as d3 from 'd3';
 import { AvgerageService } from '../services/avgerage.service';
@@ -52,8 +53,10 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
     const max = d3.max(this.all, d => d.timestamp);
     this._avg = new AvgerageService(this.config);
-    this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(Date.now())))
-    this.average = this._avg.calcExpandedAverage(this.all);
+    this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(max)))
+    this.average = this._avg.calcExpandedAverage(this.all, max);
+   
+    let a = this._avg.calcAverage(this.all)
 
     this.initializeChart();
     this.drawChart();
@@ -85,7 +88,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
       .domain(this.getMinMax(this.data, this.average))
       .nice();
 
-    this.xScale = d3.scaleTime().domain(d3.extent(this.average, d => d.ts)).nice();
+    this.xScale = d3.scaleTime().domain(d3.extent(this.average, d => d.ts));
 
     this.yAxis = this.svgInner
       .append('g')
@@ -115,7 +118,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
   drawChart() {
     this._width = this.chartElem.nativeElement.getBoundingClientRect().width;
     this.svg.attr('width', this._width);
-
+    
     this.drawLabels();
 
     this.svg.append("defs").append("SVG:clipPath")
@@ -185,7 +188,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
   }
 
   drawLabels() {
-    if(this._width < this._lg) return;
+    if (this._width < this._lg) return;
     this.svg.append("text")
       .attr("transform",
         "translate(" + ((this._width + this._margin) / 2) + " ," +

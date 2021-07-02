@@ -1,7 +1,33 @@
 <div class="container">
-    <div class="row h-100 align-items-center justify-content-center">
-      <div class="col-sm-12 col-md-6">
-        <p>profile works!</p>
+  <div class="row h-100 align-items-center justify-content-center">
+    <div class="col-sm-12 col-md-6">
+      <div *ngIf="profile$ | async; else noData ">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Registration</h5>
+            {{profile | json}}
+            <form>
+              <div class="form-group">
+                <label>Benutzername</label>
+                <input class="form-control" type="text" name="Benutzername" [(ngModel)]="profile.mail"
+                  (ngModelChange)="checkMail()">
+                <small class="text-danger" *ngIf="!validMail()">Name einfügen</small>
+                <small class="text-danger" *ngIf="mailExists">Name existiert bereits</small>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 </div>
+
+
+
+
+
+<ng-template #noData>
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</ng-template>

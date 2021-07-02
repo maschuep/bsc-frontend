@@ -22,15 +22,18 @@ export class UserService {
     );
   }
 
-  public profile(username: string){
+  public profile() {
     return this._http.get(`${this._url}/user`)
   }
 
-  public checkForMail(mail: string):Observable<boolean> {
+  public checkForMail(mail: string): Observable<boolean> {
     return this._http.get<{ message: string }>(`${this._url}/user/exists/${mail}`).pipe(
-      tap(),
       map(ans => ans.message === 'exists'),
     )
+  }
+
+  public update(profile) {
+    return this._http.patch(`${this._url}/user`, profile)
   }
 }
 

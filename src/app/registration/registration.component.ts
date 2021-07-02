@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   password1: string;
   password2: string;
 
-  phone: string;
+  phone: string ;
   participant: string;
   participantId: string;
 
@@ -43,6 +43,7 @@ export class RegistrationComponent implements OnInit {
     private _http: HttpClient,
     @Inject('BACKEND_URL') private _url: string
   ) { }
+  
   ngOnInit(): void {
   }
 
@@ -53,14 +54,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   valMail() {
-   return this.mail?.split('@').length === 2
-      && this.mail.split('.').length >= 2
-      && this.mail.split('.').pop().length < 4;
+   return this.mail?.length >= 3;
   }
 
 
   valPhone() {
-    this.validPhone = this.phone?.length >= 10;
+    this.phone.trim()
+    this.phone = this.phone.split(' ').reduce((acc,curr) => acc+= curr, '');
+    this.phone = this.phone.charAt(0) === '0' ? this.phone.substring(1) : this.phone
+    this.validPhone = this.phone?.length === 9;
   }
   valParticipant() {
     this.validParticipant = this.participantId?.length > 0;
@@ -98,17 +100,13 @@ export class RegistrationComponent implements OnInit {
       this._userService.register({
         mail: this.mail,
         password: this.password1,
-        phone: this.phone,
+        phone: `+41${this.phone}`,
         participant: this.participantId
       })
         .subscribe(ans => {
           this._router.navigate([`/overview/${ans.participant}`])
         })
     }
-
-
-
-
 
   }
 
