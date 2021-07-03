@@ -28,7 +28,7 @@ export class LoginComponent {
       this._loginService.login(this.username, this.password)
         .subscribe((ans) => {
           this.sucessful = true;
-          this._router.navigate([`/overview/${ans.participant}`])
+          this._router.navigate([`/overview`])
         },
           (err) => this.sucessful = false
         )

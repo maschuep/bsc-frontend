@@ -104,7 +104,7 @@ export class RegistrationComponent implements OnInit {
         participant: this.participantId
       })
         .subscribe(ans => {
-          this._router.navigate([`/overview/${ans.participant}`])
+          this._router.navigate([`/overview`])
         })
     }
 
