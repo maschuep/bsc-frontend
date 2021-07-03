@@ -13,7 +13,7 @@ export class AuthService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const queryToken = route.queryParamMap.get('token');
-    if(queryToken && route.routeConfig.path === 'events'){
+    if(queryToken){
       localStorage.setItem('token',queryToken)
     }
     try {
