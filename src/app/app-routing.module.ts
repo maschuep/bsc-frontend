@@ -16,6 +16,7 @@ const routes: Routes = [
   {path:'profile', component: ProfileComponent, canActivate: [AuthService]},
   {path:'events', component: EventsComponent, canActivate: [AuthService]},
   {path:'events/:participant', component: EventsComponent, canActivate: [AuthService]},
+  {path:'', redirectTo:'/overview', pathMatch:'full' },
 ];
 
 @NgModule({
