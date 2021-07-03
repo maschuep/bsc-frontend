@@ -26,8 +26,10 @@
                         </div>
 
                     </form>
-                    <button (click)="login()" type="button" class="btn btn-primary">Login</button>
-                    <br/>
+                    <div class="d-flex justify-content-between">
+                        <button (click)="login()" type="button" class="btn btn-primary">Login</button>
+                        <a href="/registration">Registrieren</a>
+                    </div>
                     <small class="text-danger" *ngIf="!sucessful">Benutzername oder Passwort falsch</small>
                 </div>
             </div>
