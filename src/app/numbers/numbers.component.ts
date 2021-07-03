@@ -19,6 +19,9 @@ export class NumbersComponent implements OnChanges {
   private _avg: AvgerageService;
 
   averages: AverageObject;
+  change = 0;
+  color = 'black';
+  sign = '+';
   constructor() { }
 
   ngOnChanges(change: { config: SimpleChange, all: SimpleChange }): void {
@@ -31,6 +34,13 @@ export class NumbersComponent implements OnChanges {
       this.all = change.all.currentValue;
     }
     this.averages = this._avg.simpleAverage(this.all)
+    this.change = this.round(100 * (this.averages.usage / this.averages.avg) - 100)
+    this.color = this.change > 0 ? 'text-danger' : 'text-success';
+    this.sign = this.change > 0 ? '+' : '';
   }
 
+
+  round(nmbr: number) {
+    return Math.round(nmbr * 10) / 10;
+  }
 }

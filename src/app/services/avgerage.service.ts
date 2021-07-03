@@ -48,10 +48,6 @@ export class AvgerageService {
     return data.reduce((acc, curr) => acc = acc > fn(curr) ? fn(curr) : acc, Number.MAX_VALUE);
   }
 
-  averageInPeriod(data: Measurement[]) {
-
-  }
-
   calcAverage(data: Measurement[]) {
     const max = data.reduce((acc, curr) => acc > curr.timestamp ? acc : curr.timestamp, 0)
     return Array.from(data.reduce((acc, curr) => {

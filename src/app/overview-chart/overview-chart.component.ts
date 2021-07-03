@@ -55,8 +55,6 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
     this._avg = new AvgerageService(this.config);
     this.data = this.all.filter(d => d.timestamp > (this._avg.getStartOfDuration(max)))
     this.average = this._avg.calcExpandedAverage(this.all, max);
-   
-    let a = this._avg.calcAverage(this.all)
 
     this.initializeChart();
     this.drawChart();
