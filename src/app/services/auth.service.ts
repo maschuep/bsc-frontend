@@ -12,10 +12,6 @@ export class AuthService implements CanActivate {
   constructor(private _router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const queryToken = route.queryParamMap.get('token');
-    if(queryToken){
-      localStorage.setItem('token',queryToken)
-    }
     try {
       const token = localStorage.getItem('token');
       const decoded = decode<Token>(token);

@@ -8,7 +8,7 @@
                 Tätigkeit zuordnen.
                 In der Übersicht sehen sie die Häufigsten Gründe für erhöhten Stromverbrauch.
             </p>
-            <div *ngIf="new && new.length > 0">
+            <div class="mb-5" *ngIf="new && new.length > 0">
                 <h2>Neu</h2>
                 <div class="d-flex flex-wrap">
                     <div *ngFor="let n of new" class="card shrink-1 m-1">
@@ -20,14 +20,14 @@
                                 <input class="form-control" type="text" [id]="n.eventId" name="Grund"
                                     [(ngModel)]="n.reason">
                             </div>
-                            <div (click)="save(n)" type="button" class="btn btn-primary">
+                            <div (keyup.enter)="save(n)" (click)="save(n)" type="button" class="btn btn-primary">
                                 Speichern
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="often && often.length > 0">
+            <div class="mb-5" *ngIf="often && often.length > 0">
                 <h2>Häufige Gründe</h2>
                 <div class="d-flex">
                     <div *ngFor="let o of often" class="card shrink-1 m-1">

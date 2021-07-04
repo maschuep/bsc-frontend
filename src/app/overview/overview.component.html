@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row h-100 align-items-center justify-content-center">
     <div class="col-sm-12 col-md-11">
-      <h1>Übersicht</h1>
+      <h1>Durchschnittlicher Stromverbrauch</h1>
+      <p class="ml-2 mt-4 mb-4">In rot sehen sie den aktuellen Verbrauch über eine Zeitspanne und in blau kann man den Durchschnitt erkennen.</p>
 
       <div *ngIf="all$ | async as all else noData">
         <div class="ml-md-4 ml-sm-0">
@@ -18,11 +19,6 @@
 
 
       </div>
-      <h2 class="mt-5">Informationen</h2>
-      <p>Hier sehen sie eine Übersicht über ihren Stromverbrauch. Mithilfe der Knöpfe können sie die Zeitdauer anpassen.
-        In rot sehen sie den aktuellen Verbrauch über eine Zeitspanne und in blau kann man den Durchschnitt erkennen. 
-      </p>
-      <p>Die Zahlen oberhalb der Abbildung zeigen an wie hoch ihr Stromverbrauch innerhalb der gewählten Zeit im Vergleich zum Durchschnitt ist. </p>
     </div>
   </div>
 </div>

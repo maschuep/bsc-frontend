@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NumbersComponent } from './numbers/numbers.component';
 import { KWhPipe } from './services/pipes/k-wh.pipe';
 import { EventsComponent } from './events/events.component';
+import { TokenComponent } from './token/token.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { EventsComponent } from './events/events.component';
     ProfileComponent,
     NumbersComponent,
     KWhPipe,
-    EventsComponent
+    EventsComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

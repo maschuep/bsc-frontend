@@ -46,7 +46,7 @@ export class EventsComponent implements OnInit {
   save(event: Event) {
     this.new = this.new.filter(n => n.eventId !== event.eventId)
     this.often = this.reduceToOften(this.all)
-    this._es.update(event).subscribe(answ => window.alert(answ))
+    this._es.update(event).subscribe()
   }
 
   reduceToOften(all: Event[]): Event[] {

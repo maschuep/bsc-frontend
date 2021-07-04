@@ -35,6 +35,10 @@ export class UserService {
   public update(profile) {
     return this._http.patch(`${this._url}/user`, profile)
   }
+
+  public session(){
+    return this._http.get(`${this._url}/user/session`)
+  }
 }
 
 

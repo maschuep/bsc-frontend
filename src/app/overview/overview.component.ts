@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { concatAll, map } from 'rxjs/operators';
 import { StatisticsConfig } from '../services/interfaces/statistics-config';
 import { OverviewService } from '../services/overview.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-overview',
@@ -42,12 +43,12 @@ export class OverviewComponent implements OnInit {
 
   latest: { wh: number, timestamp: number };
 
-  constructor(private _ov: OverviewService, private _route: ActivatedRoute) {
+  constructor( private _ov: OverviewService, private _route: ActivatedRoute) {
     this.configForToday();
   }
 
   ngOnInit(): void {
-
+    
   }
 
   getLatest() {

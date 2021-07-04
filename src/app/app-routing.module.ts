@@ -6,6 +6,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthService } from './services/auth.service';
+import { TokenComponent } from './token/token.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'profile', component: ProfileComponent, canActivate: [AuthService]},
   {path:'events', component: EventsComponent, canActivate: [AuthService]},
   {path:'events/:participant', component: EventsComponent, canActivate: [AuthService]},
+  {path:'token/:tokenId', component: TokenComponent,},
   {path:'', redirectTo:'/overview', pathMatch:'full' },
 ];
 

@@ -1,0 +1,15 @@
+<div *ngIf="token$ | async as all else noData"class="container">
+    <div class="row h-100 align-items-center justify-content-center">
+        <div class="mt-5 col-sm-12 col-md-11 text-center">
+            <a href="/login"><h1>Hier gelangen Sie zum Login</h1></a>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #noData>
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</ng-template>

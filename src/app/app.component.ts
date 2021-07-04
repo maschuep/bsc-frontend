@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as d3 from 'd3';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,13 @@ export class AppComponent {
   isCollapsed: boolean;
   
 
-  constructor(private _router: Router){
+  constructor(private _router: Router, private _us:UserService){
     this.isCollapsed = true;
+    setInterval(() => {
+      this._us.session().subscribe()
+    }, 
+      1000 * 60
+    )
     d3.timeFormatDefaultLocale({
       "dateTime": "%A, der %e. %B %Y, %X",
       "date": "%d.%m.%Y",

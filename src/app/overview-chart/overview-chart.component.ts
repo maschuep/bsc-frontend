@@ -26,7 +26,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
 
   private _width = 700;
   private _height = 400;
-  private _margin = 17;
+  private _margin = 30;
 
   public svg;
   public svgInner;
@@ -190,7 +190,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
     this.svg.append("text")
       .attr("transform",
         "translate(" + ((this._width + this._margin) / 2) + " ," +
-        (this._height) + ")")
+        (this._height )+ ")")
       .style("text-anchor", "middle")
       .text("Zeit");
 
