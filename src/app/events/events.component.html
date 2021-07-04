@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row h-100 align-items-center justify-content-center">
+    <div class="row h-100 align-items-center justify-content-center ">
         <div *ngIf="event$ | async else noData" class="col-sm-12 col-md-11">
             <h1>Events</h1>
             <p>Falls Ihr Stromverbrauch vom Durchschnitt zu fest abweicht, wird ein Event erstellt. Das ermöglicht ihnen
@@ -10,11 +10,11 @@
             </p>
             <div *ngIf="new && new.length > 0">
                 <h2>Neu</h2>
-                <div class="d-flex">
+                <div class="d-flex flex-wrap">
                     <div *ngFor="let n of new" class="card shrink-1 m-1">
                         <div class="card-body ">
                             <p>Datum: {{n.timestamp | date}} </p>
-                            <p>Uhrzeit: {{n.timestamp | date: 'HH:mm'}}</p>
+                            <p>Uhrzeit: {{n.timestamp - 1000*60*15 | date: 'HH:mm'}} bis {{n.timestamp | date: 'HH:mm'}}</p>
                             <div class="form-group">
                                 <label>Grund</label>
                                 <input class="form-control" type="text" [id]="n.eventId" name="Grund"
