@@ -1,2 +1,3 @@
 <p class="mb-0">Verbrauch: {{averages.usage | kWh }} <span [ngClass]="color">({{ sign }}{{ change }}%)</span></p>
-<p>Durchschnitt: {{ averages.avg | kWh }} </p>
+<p class="mb-0">Durchschnitt: {{ averages.avg | kWh }} </p>
+<p>Letzte Messung: {{ last | date: 'd.M, HH:MM'}} Uhr</p>

@@ -22,6 +22,7 @@ export class NumbersComponent implements OnChanges {
   change = 0;
   color = 'black';
   sign = '+';
+  last;
   constructor() { }
 
   ngOnChanges(change: { config: SimpleChange, all: SimpleChange }): void {
@@ -37,6 +38,7 @@ export class NumbersComponent implements OnChanges {
     this.change = this.round(100 * (this.averages.usage / this.averages.avg) - 100)
     this.color = this.change > 0 ? 'text-danger' : 'text-success';
     this.sign = this.change > 0 ? '+' : '';
+    this.last = new Date(this._avg.max(this.all, d => d.timestamp));
   }
 
 

@@ -43,12 +43,12 @@ export class OverviewComponent implements OnInit {
 
   latest: { wh: number, timestamp: number };
 
-  constructor( private _ov: OverviewService, private _route: ActivatedRoute) {
+  constructor(private _ov: OverviewService, private _route: ActivatedRoute) {
     this.configForToday();
   }
 
   ngOnInit(): void {
-    
+
   }
 
   getLatest() {
@@ -66,7 +66,12 @@ export class OverviewComponent implements OnInit {
   }
 
   configForThisWeek() {
-    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    const today = new Date();
+    const first = new Date(today.getFullYear(), 0, 1);
+    const numberOfDays = Math.floor((today.valueOf() - first.valueOf()) / (24 * 60 * 60 * 1000))
+    const res = Math.ceil((today.getDay() + 1 + numberOfDays) / 7);
+    const offset = res % 2 === 1 ? 1000 * 60 * 60 * 24 * 4 : -1000 * 60 * 60 * 24 * 3;
+    this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: offset }
     this.numbersConfig = { duration: this.chartConfig.window, ...this.chartConfig, granularity: 1000 * 60, };
   }
 
@@ -74,8 +79,7 @@ export class OverviewComponent implements OnInit {
     const today = new Date();
     const start = new Date(today.getFullYear(), today.getMonth(), 1, 2);
     const end = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-    console.log(end)
-    this.chartConfig = { granularity: 1000 * 60 * 60, duration: end.valueOf() - start.valueOf(), durationStart: start.valueOf(), durationEnd: end.valueOf(), window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
+    this.chartConfig = { granularity: 1000 * 60 * 60 * 3, duration: end.valueOf() - start.valueOf(), durationStart: start.valueOf(), durationEnd: end.valueOf(), window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
     this.numbersConfig = { granularity: 1000 * 60, durationStart: start.valueOf(), durationEnd: end.valueOf(), window: 1000 * 60 * 60 * 24 * 7, durationOffset: -1000 * 60 * 60 * 24 * 3 }
   }
 
