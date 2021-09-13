@@ -17,8 +17,11 @@ export class EventsComponent implements OnInit {
 
   new: Event[];
   often: Event[];
+  oftenShort: Event[];
   all: Event[];
   reasons: string[];
+
+  increment = 5;
 
 
 
@@ -33,6 +36,7 @@ export class EventsComponent implements OnInit {
     concatAll(),
     tap(all => this.new = all.filter(a => !a.reason)),
     tap(all => this.often = this.reduceToOften(all)),
+    tap(() => this.oftenShort = this.often.slice(0,10)),
     tap(data => this.all = data),
     tap(dat => this.reasons = Array.from(dat.filter(a => a.reason).reduce((acc,curr) => acc.set(curr.reason, curr.reason) ,new Map<string,string>()).keys())),
   )
@@ -65,9 +69,13 @@ export class EventsComponent implements OnInit {
           new Map<string, Event>()).entries()
     )
       .map(d => { return { ...d[1] } })
-      .sort((a, b) => b.count - a.count)
+      .sort((a, b) => b.count - a.count);
 
 
+  }
+  showAll(){
+    this.increment += this.increment + 5;
+    this.oftenShort = this.often.slice(0, this.increment);
   }
 
 }

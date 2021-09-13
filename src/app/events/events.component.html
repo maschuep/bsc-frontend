@@ -27,12 +27,17 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-5" *ngIf="often && often.length > 0">
+            <div class="mb-5" *ngIf="oftenShort && oftenShort.length > 0">
                 <h2>Häufige Gründe</h2>
-                <div class="d-flex">
-                    <div *ngFor="let o of often" class="card shrink-1 m-1">
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let o of oftenShort" class="card shrink-1 m-1">
                         <div class="card-body ">
                             {{o.reason}} ({{o.count}})
+                        </div>
+                    </div>
+                    <div class="card shrink-1 m-1">
+                        <div class="card-body" (click)="showAll()">
+                            mehr anzeigen
                         </div>
                     </div>
                 </div>
