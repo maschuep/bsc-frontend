@@ -7,7 +7,7 @@
                     <form>
                         <div class="form-group">
                             <label>Benutzername</label>
-                            <input class="form-control" type="text" name="Benutzername" [(ngModel)]="mail" (ngModelChange)="checkMail()">
+                            <input class="form-control" type="email" name="Benutzername" [(ngModel)]="mail" (ngModelChange)="checkMail()">
                             <small class="text-danger" *ngIf="!validMail">Name einfügen</small>
                             <small class="text-danger" *ngIf="mailExists">Name existiert bereits</small>
                         </div>
@@ -18,7 +18,7 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon3">+41</span>
                                 </div>
-                                <input  [(ngModel)]="phone" name="nummer" type="text" class="form-control" aria-describedby="basic-addon3">
+                                <input  [(ngModel)]="phone" name="nummer" type="tel" class="form-control" aria-describedby="basic-addon3">
                               </div>
                             
                             <small class="text-danger" *ngIf="!validPhone">Mobiltelefonnummer mit Format 79 123 45  67 einfügen.</small>

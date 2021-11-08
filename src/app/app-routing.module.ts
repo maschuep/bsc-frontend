@@ -12,6 +12,7 @@ import { TokenComponent } from './token/token.component';
 const routes: Routes = [
   {path:'login', component: LoginComponent, },
   {path:'registration', component: RegistrationComponent, },
+  {path:'registration/:active', component: RegistrationComponent, },
   {path:'overview/:participant', component: OverviewComponent, canActivate: [AuthService]},
   {path:'overview', component: OverviewComponent, canActivate: [AuthService]},
   {path:'profile', component: ProfileComponent, canActivate: [AuthService]},

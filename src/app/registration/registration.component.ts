@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -31,16 +31,20 @@ export class RegistrationComponent implements OnInit {
   validPhone: boolean = true;
   validParticipant: boolean = true;
 
-  //make table participant which specifies how much people, square feet, type of heating,
-  /*
-  falls participant daten nicht erfasst das noch tun und dann anmelden
-  */
+  active: boolean = false;
+
+  active$ = this._route.params.pipe(
+    map(p => p.active),
+    map(active => active ? true : false),
+    tap(a => this.active = a)
+  ).subscribe()
 
 
   constructor(
     private _userService: UserService,
     private _router: Router,
     private _http: HttpClient,
+    private _route: ActivatedRoute,
     @Inject('BACKEND_URL') private _url: string
   ) { }
   
@@ -90,6 +94,7 @@ export class RegistrationComponent implements OnInit {
     this.valPwd();
     this.valPhone();
     this.valParticipant();
+    console.log(this.active);
     if (
       this.validMail
       && this.validPw
@@ -101,7 +106,8 @@ export class RegistrationComponent implements OnInit {
         mail: this.mail,
         password: this.password1,
         phone: `+41${this.phone}`,
-        participant: this.participantId
+        participant: this.participantId,
+        active: this.active
       })
         .subscribe(ans => {
           this._router.navigate([`/overview`])

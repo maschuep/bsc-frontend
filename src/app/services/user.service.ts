@@ -16,7 +16,7 @@ export class UserService {
     );
   }
 
-  public register(user: { mail: string, password: string, phone: string, participant: string }): Observable<any> {
+  public register(user: { mail: string, password: string, phone: string, participant: string, active: boolean}): Observable<any> {
     return this._http.post<{ userName: string, token: string }>(`${this._url}/user/register`, { ...user }).pipe(
       tap(a => localStorage.setItem('token', a.token)),
     );
