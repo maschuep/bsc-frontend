@@ -8,6 +8,21 @@
                 Tätigkeit zuordnen.
                 In der Übersicht sehen sie die Häufigsten Gründe für erhöhten Stromverbrauch.
             </p>
+            <div class="mb-5" *ngIf="oftenShort && oftenShort.length > 0">
+                <h2>Häufige Gründe</h2>
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let o of oftenShort" class="card shrink-1 m-1">
+                        <div class="card-body ">
+                            {{o.reason}} ({{o.count}})
+                        </div>
+                    </div>
+                    <div class="card shrink-1 m-1" *ngIf="often.length > 10">
+                        <div class="card-body" (click)="showAll()">
+                            mehr anzeigen
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mb-5" *ngIf="new && new.length > 0">
                 <h2>Neu</h2>
                 <div class="d-flex flex-wrap">
@@ -23,21 +38,6 @@
                             <div (keyup.enter)="save(n)" (click)="save(n)" type="button" class="btn btn-primary">
                                 Speichern
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-5" *ngIf="oftenShort && oftenShort.length > 0">
-                <h2>Häufige Gründe</h2>
-                <div class="d-flex flex-wrap">
-                    <div *ngFor="let o of oftenShort" class="card shrink-1 m-1">
-                        <div class="card-body ">
-                            {{o.reason}} ({{o.count}})
-                        </div>
-                    </div>
-                    <div class="card shrink-1 m-1">
-                        <div class="card-body" (click)="showAll()">
-                            mehr anzeigen
                         </div>
                     </div>
                 </div>
