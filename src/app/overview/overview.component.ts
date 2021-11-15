@@ -70,7 +70,7 @@ export class OverviewComponent implements OnInit {
     const first = new Date(today.getFullYear(), 0, 1);
     const numberOfDays = Math.floor((today.valueOf() - first.valueOf()) / (24 * 60 * 60 * 1000))
     const res = Math.ceil((today.getDay() + 1 + numberOfDays) / 7);
-    const offset = res % 2 === 1 ? 1000 * 60 * 60 * 24 * 4 : -1000 * 60 * 60 * 24 * 3;
+    const offset = res % 2 === 1 ? 1000 * 60 * 60 * 24 * 4 : 1000 * 60 * 60 * 24 * 3;
     this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: offset }
     this.numbersConfig = { duration: this.chartConfig.window, ...this.chartConfig, granularity: 1000 * 60, };
   }

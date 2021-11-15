@@ -37,6 +37,7 @@ import { TokenComponent } from './token/token.component';
     HttpClientModule
   ],
   providers: [
+    //{ provide: 'BACKEND_URL', useValue: "http://localhost:3002" },
     { provide: 'BACKEND_URL', useValue: "https://bsc-api.maschuep.ch" },
     { provide: HTTP_INTERCEPTORS, useClass: BearerAuthInterceptor, multi: true }
   ],
