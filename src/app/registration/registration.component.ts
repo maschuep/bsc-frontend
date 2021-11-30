@@ -63,10 +63,10 @@ export class RegistrationComponent implements OnInit {
 
 
   valPhone() {
-    this.phone.trim()
-    this.phone = this.phone.split(' ').reduce((acc,curr) => acc+= curr, '');
-    this.phone = this.phone.charAt(0) === '0' ? this.phone.substring(1) : this.phone
-    this.validPhone = this.phone?.length === 9;
+    this.phone?.trim()
+    this.phone = this.phone?.split(' ').reduce((acc,curr) => acc+= curr, '');
+    this.phone = this.phone?.charAt(0) === '0' ? this.phone.substring(1) : this.phone
+    this.validPhone = this.phone?.length === 9 || !this.active;
   }
   valParticipant() {
     this.validParticipant = this.participantId?.length > 0;
@@ -94,7 +94,6 @@ export class RegistrationComponent implements OnInit {
     this.valPwd();
     this.valPhone();
     this.valParticipant();
-    console.log(this.active);
     if (
       this.validMail
       && this.validPw
