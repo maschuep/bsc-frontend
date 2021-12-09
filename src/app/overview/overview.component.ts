@@ -66,6 +66,11 @@ export class OverviewComponent implements OnInit {
   }
 
   configForThisWeek() {
+    this.chartConfig = { granularity: 1000 * 60 * 15, window: 1000 * 60 * 60 * 24 * 7, durationOffset: - 4 * 1000 * 60*60*24}
+    this.numbersConfig = { duration: this.chartConfig.window, ...this.chartConfig, granularity: 1000 * 60, };
+  }
+
+  /*configForThisWeek() {
     const today = new Date();
     const first = new Date(today.getFullYear(), 0, 1);
     const numberOfDays = Math.floor((today.valueOf() - first.valueOf()) / (24 * 60 * 60 * 1000))
@@ -73,7 +78,7 @@ export class OverviewComponent implements OnInit {
     const offset = res % 2 === 1 ? 1000 * 60 * 60 * 24 * 4 : 1000 * 60 * 60 * 24 * 3;
     this.chartConfig = { granularity: 1000 * 60 * 5, window: 1000 * 60 * 60 * 24 * 7, durationOffset: offset }
     this.numbersConfig = { duration: this.chartConfig.window, ...this.chartConfig, granularity: 1000 * 60, };
-  }
+  }*/
 
   configForLastMonth() {
     const today = new Date();
