@@ -13,7 +13,7 @@ import { StatisticsConfig } from '../services/interfaces/statistics-config';
 export class OverviewChartComponent implements AfterViewInit, OnChanges {
 
 
-
+  // measurements from the participant
   @Input() all: Measurement[];
   @Input() config: StatisticsConfig;
   data: Measurement[];
@@ -21,9 +21,9 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
   private _avg: AvgerageService;
 
   average: { ts: number, avg: number, count: number }[];
-
+    
+  //static numbers
   private _lg = 990;
-
   private _width = 700;
   private _height = 400;
   private _margin = 30;
@@ -40,6 +40,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
 
   constructor(public chartElem: ElementRef) { }
 
+  // listen on changes of the viewsize (makes responsive graphic)
   ngOnChanges(changes: { config: SimpleChange, all: SimpleChange }) {
 
     if (this.data && this.average) {
@@ -50,6 +51,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  // create graph 
   ngAfterViewInit(): void {
     const max = d3.max(this.all, d => d.timestamp);
     this._avg = new AvgerageService(this.config);
@@ -113,6 +115,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
     d3.select(window).on('resize', () => this.drawChart());
   }
 
+  // draw and attach the graph to the configured html element
   drawChart() {
     this._width = this.chartElem.nativeElement.getBoundingClientRect().width;
     this.svg.attr('width', this._width);
@@ -158,6 +161,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
     this.lineGroup.attr('d', line(points));
   }
 
+  // redraw section of the graph that is zoomed into
   onZoom(event, data: Measurement[], avg: { avg: number, ts: number, count: number }[]) {
 
     const newScale = event.transform.rescaleX(this.xScale);
@@ -185,6 +189,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
 
   }
 
+  // draws labels and attaches them to the grpah
   drawLabels() {
     if (this._width < this._lg) return;
     this.svg.append("text")
@@ -203,6 +208,7 @@ export class OverviewChartComponent implements AfterViewInit, OnChanges {
       .text("Wattstunden (Wh)");
   }
 
+  // used to decide how to clip the graph
   getMinMax(d: Measurement[], avg: { avg: number, ts: number, count: number }[]): number[] {
     let max = 0;
     let min = 100000000;
